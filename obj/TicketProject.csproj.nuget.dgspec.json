@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\dev\\TicketProject\\TicketProject\\TicketProject.csproj": {}
+    "C:\\dev\\TicketProject\\TicketProject.csproj": {}
   },
   "projects": {
-    "C:\\dev\\TicketProject\\TicketProject\\TicketProject.csproj": {
+    "C:\\dev\\TicketProject\\TicketProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\dev\\TicketProject\\TicketProject\\TicketProject.csproj",
+        "projectUniqueName": "C:\\dev\\TicketProject\\TicketProject.csproj",
         "projectName": "TicketProject",
-        "projectPath": "C:\\dev\\TicketProject\\TicketProject\\TicketProject.csproj",
+        "projectPath": "C:\\dev\\TicketProject\\TicketProject.csproj",
         "packagesPath": "C:\\Users\\Kostiantyn\\.nuget\\packages\\",
-        "outputPath": "C:\\dev\\TicketProject\\TicketProject\\obj\\",
+        "outputPath": "C:\\dev\\TicketProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Kostiantyn\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -46,9 +46,17 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.5.2, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[10.0.11, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[10.0.3, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

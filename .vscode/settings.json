@@ -1,0 +1,16 @@
+{
+  "sqltools.connections": [
+    {
+      "ssh": "Disabled",
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "postgres-connection",
+      "database": "ticket_project",
+      "username": "postgres",
+      "password": "ticketprojectpass",
+      "connectionTimeout": 30
+    }
+  ]
+}
