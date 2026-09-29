@@ -217,6 +217,22 @@
           }
         }
       },
+      "Scalar.AspNetCore/2.17.8": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Swashbuckle.AspNetCore/6.5.0": {
         "type": "package",
         "dependencies": {
@@ -958,6 +974,25 @@
         "version.txt"
       ]
     },
+    "Scalar.AspNetCore/2.17.8": {
+      "sha512": "KboA9Qm60RiikrXQ28EzUSevksNDPhRV/jTAGEw9vbo8VAw+JFXdNm9vlOtFHwptp5yCHHaupTCIMCbT/EbiiQ==",
+      "type": "package",
+      "path": "scalar.aspnetcore/2.17.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "icon.png",
+        "lib/net10.0/Scalar.AspNetCore.dll",
+        "lib/net10.0/Scalar.AspNetCore.xml",
+        "lib/net8.0/Scalar.AspNetCore.dll",
+        "lib/net8.0/Scalar.AspNetCore.xml",
+        "lib/net9.0/Scalar.AspNetCore.dll",
+        "lib/net9.0/Scalar.AspNetCore.xml",
+        "scalar.aspnetcore.2.17.8.nupkg.sha512",
+        "scalar.aspnetcore.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/6.5.0": {
       "sha512": "FK05XokgjgwlCI6wCT+D4/abtQkL1X1/B9Oas6uIwHFmYrIO9WUD5aLC9IzMs9GnHfUXOtXZ2S43gN1mhs5+aA==",
       "type": "package",
@@ -1404,6 +1439,7 @@
       "EntityFramework >= 6.5.2",
       "Microsoft.AspNetCore.OpenApi >= 10.0.11",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 10.0.3",
+      "Scalar.AspNetCore >= 2.17.8",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
   },
@@ -1463,6 +1499,10 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",
             "version": "[10.0.3, )"
+          },
+          "Scalar.AspNetCore": {
+            "target": "Package",
+            "version": "[2.17.8, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

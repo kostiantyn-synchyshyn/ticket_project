@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TicketProject.Data;
+using Scalar.AspNetCore;
 using TicketProject.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,10 +20,11 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// OpenAPI only in development
+// OpenAPI and Scalar only in development
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
@@ -55,5 +57,88 @@ app.MapGet("/test-db", async (ApplicationDbContext db) =>
         );
     }
 });
+
+// post projects 
+app.MapPost("/projects", async (
+    Project project,
+    ApplicationDbContext db) =>
+{
+    db.Projects.Add(project);
+    await db.SaveChangesAsync();
+
+    return Results.Created($"/projects/{project.Id}", project);
+});
+
+// get projects
+app.MapGet("/projects", async (ApplicationDbContext db) =>
+{
+    var projects = await db.Projects.ToListAsync();
+
+    return Results.Ok(projects);
+});
+
+// get specific projects id
+app.MapGet("/projects/{id}", async (
+    int id,
+    ApplicationDbContext db) =>
+{
+    var project = await db.Projects
+        .FirstOrDefaultAsync(p => p.Id == id);
+
+    if (project == null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(project);
+});
+
+// get tickets related to a project id
+app.MapGet("/projects/{id}/tickets", async (
+    int id,
+    ApplicationDbContext db) =>
+{
+    var tickets = await db.Tickets
+        .Where(t => t.ProjectId == id)
+        .ToListAsync();
+
+    return Results.Ok(tickets);
+});
+
+// post tickets
+app.MapPost("/tickets", async (
+    Ticket ticket,
+    ApplicationDbContext db) =>
+{
+    db.Tickets.Add(ticket);
+    await db.SaveChangesAsync();
+
+    return Results.Created($"/tickets/{ticket.Id}", ticket);
+});
+
+// get tickets
+app.MapGet("/tickets", async (ApplicationDbContext db) =>
+{
+    var tickets = await db.Tickets.ToListAsync();
+
+    return Results.Ok(tickets);
+});
+
+// get tickets id
+app.MapGet("/tickets/{id}", async (
+    int id,
+    ApplicationDbContext db) =>
+{
+    var ticket = await db.Tickets
+        .FirstOrDefaultAsync(t => t.Id == id);
+
+    if (ticket == null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(ticket);
+});
+
 
 app.Run();

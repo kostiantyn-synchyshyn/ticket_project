@@ -92,3 +92,5 @@ C:\dev\TicketProject\obj\Debug\net10.0\refint\TicketProject.dll
 C:\dev\TicketProject\obj\Debug\net10.0\TicketProject.pdb
 C:\dev\TicketProject\obj\Debug\net10.0\TicketProject.genruntimeconfig.cache
 C:\dev\TicketProject\obj\Debug\net10.0\ref\TicketProject.dll
+C:\dev\TicketProject\bin\Debug\net10.0\Scalar.AspNetCore.dll
+C:\dev\TicketProject\obj\Debug\net10.0\TicketProject.sourcelink.json

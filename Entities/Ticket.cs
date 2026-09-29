@@ -29,7 +29,8 @@ public class Ticket
 
     [Column("updated_time")]
     public DateTime? UpdatedTime { get; set; }
-
+    
+// foreign keys    
     [Column("creator_id")]
     public int CreatorId { get; set; }
 
@@ -40,8 +41,11 @@ public class Ticket
     public int ProjectId { get; set; }
     
 // relationships
+    [JsonIgnore]
     public User Creator { get; set; } = null!;
+    [JsonIgnore]
     public User Assignee { get; set; } = null!;
     
+    [JsonIgnore]
     public Project Project { get; set; } = null!;
 }
