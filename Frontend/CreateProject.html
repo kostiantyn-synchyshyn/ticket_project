@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicketProject - Create Project</title>
+    <link rel="stylesheet" href="/Css/Site.css">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="logo">
+        TicketProject
+    </div>
+
+    <nav>
+        <a href="/Index.html">Projects</a>
+        <a href="/CreateProject.html">Create Project</a>
+        <a href="/CreateTicket.html">Create Ticket</a>
+    </nav>
+
+    <a href="/Login.html" class="logout-button">
+        Logout
+    </a>
+ 
+
+</header>
+
+<main class="page-container">
+    
+    <div class="page-header">
+
+        <div>
+            <h1>Create Project</h1>
+            <p>Create a new project</p>
+        </div>
+
+    </div>
+
+    <div class="form-card">
+
+        <div class="form-row">
+
+            <label for="projectId">
+                Project ID
+            </label>
+
+            <input
+                    id="projectId"
+                    type="text"
+                    value="Automatically generated"
+                    disabled>
+
+        </div>
+
+
+        <div class="form-row">
+
+            <label for="projectKey">
+                Project Key
+            </label>
+
+            <input
+                    id="projectKey"
+                    type="text"
+                    placeholder="e.g. PAY"
+                    maxlength="10">
+
+        </div>
+
+
+        <div class="form-row">
+
+            <label for="projectName">
+                Project Name
+            </label>
+
+            <input
+                    id="projectName"
+                    type="text"
+                    placeholder="e.g. Payment System"
+                    required>
+
+        </div>
+
+
+        <div class="form-row">
+
+            <label for="projectAdmin">
+                Project Admin
+            </label>
+
+            <input
+                    id="projectAdmin"
+                    type="text"
+                    placeholder="Project administrator"
+                    required>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <a
+                    href="/Index.html"
+                    class="secondary-button">
+                Cancel
+            </a>
+
+            <button
+                    type="button"
+                    class="primary-button"
+                    onclick="createProject(
+    document.getElementById('projectKey').value,
+    document.getElementById('projectName').value,
+    document.getElementById('projectAdmin').value
+)">
+                Create Project
+            </button>
+
+        </div>
+
+    </div>
+
+</main>
+
+<script src="/Js/App.js"></script>
+
+</body>
+</html>

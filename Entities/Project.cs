@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+
 namespace TicketProject.Entities;
 
 [Table("project")]
 public class Project
 {
     [Column("id")]
+        
     public int Id { get; set; }
 
     [Column("project_key")]

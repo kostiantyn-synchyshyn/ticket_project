@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicketProject - Register</title>
+    <link rel="stylesheet" href="/Css/Site.css">
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container">
+    
+    <h1>Create Account</h1>
+    <p class="subtitle">Register for TicketProject</p>
+    
+    <form>
+
+        <label for="name">Name</label>
+        <input
+                id="name"
+                type="text"
+                placeholder="Your name">
+
+        <label for="email">Email</label>
+        <input
+                id="email"
+                type="email"
+                placeholder="Your email">
+
+        <label for="password">Password</label>
+        <input
+                id="password"
+                type="password"
+                placeholder="Create a password">
+
+        <button
+                type="button"
+                class="primary-button"
+                onclick="createUser(
+            document.getElementById('name').value,
+            document.getElementById('email').value,
+            document.getElementById('password').value,
+            'User'
+        )">
+            Register
+        </button>
+
+    </form>
+   
+    
+    <p class="auth-link">
+        Already have an account?
+        <a href="/Login.html">Login</a>
+    </p>
+
+</div>
+
+<script src="/Js/App.js"></script>
+
+</body>
+</html>

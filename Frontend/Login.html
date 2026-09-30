@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicketProject - Login</title>
+    <link rel="stylesheet" href="/Css/Site.css">
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container">
+    
+    <h1>TicketProject</h1>
+    <p class="subtitle">Sign in to continue</p>
+    
+    <form>
+
+        <label for="email">Email</label>
+        <input
+                id="email"
+                type="email"
+                placeholder="Enter your email">
+
+        <label for="password">Password</label>
+        <input
+                id="password"
+                type="password"
+                placeholder="Enter your password">
+
+        <button
+                type="button"
+                class="primary-button"
+                onclick="window.location.href='/Index.html'">
+            Login
+        </button>
+
+    </form>
+ 
+
+    <p class="auth-link">
+        Don't have an account?
+        <a href="/Register.html">Register</a>
+    </p>
+
+</div>
+
+<script src="/Js/App.js"></script>
+
+</body>
+</html>

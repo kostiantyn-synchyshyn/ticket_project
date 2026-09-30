@@ -1,17 +1,20 @@
 using Microsoft.EntityFrameworkCore;
-using TicketProject.Data;
+using Microsoft.Extensions.FileProviders;
 using Scalar.AspNetCore;
+using TicketProject.Data;
 using TicketProject.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Get the PostgreSQL connection string
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-                       ?? throw new InvalidOperationException(
-                           "Connection string 'DefaultConnection' not found."
-                       );
+var connectionString =
+    builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Connect Entity Framework Core to PostgreSQL
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException(
+        "Connection string 'DefaultConnection' not found.");
+}
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
@@ -29,33 +32,36 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Test database connection
+var frontendPath = Path.Combine(
+    builder.Environment.ContentRootPath,
+    "Frontend");
+
+app.UseDefaultFiles(new DefaultFilesOptions
+{
+    FileProvider = new PhysicalFileProvider(frontendPath)
+});
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(frontendPath)
+});
+
 app.MapGet("/test-db", async (ApplicationDbContext db) =>
 {
-    try
-    {
-        var projects = await db.Projects
-            .Select(project => new
-            {
-                project.Id,
-                project.ProjectKey,
-                project.Name,
-                project.ProjectAdmin,
+    var projects = await db.Projects
+        .Select(project => new
+        {
+            project.Id,
+            project.ProjectKey,
+            project.Name,
+            project.ProjectAdmin,
+            Tickets = db.Tickets
+                .Where(ticket => ticket.ProjectId == project.Id)
+                .ToList()
+        })
+        .ToListAsync();
 
-                Tickets = db.Tickets
-                    .Where(ticket => ticket.ProjectId == project.Id)
-                    .ToList()
-            })
-            .ToListAsync();
-
-        return Results.Ok(projects);
-    }
-    catch (Exception ex)
-    {
-        return Results.Problem(
-            $"Database connection failed: {ex}"
-        );
-    }
+    return Results.Ok(projects);
 });
 
 // post projects 
@@ -83,9 +89,9 @@ app.MapGet("/projects/{id}", async (
     ApplicationDbContext db) =>
 {
     var project = await db.Projects
-        .FirstOrDefaultAsync(p => p.Id == id);
+        .FirstOrDefaultAsync(project => project.Id == id);
 
-    if (project == null)
+    if (project is null)
     {
         return Results.NotFound();
     }
@@ -99,18 +105,69 @@ app.MapGet("/projects/{id}/tickets", async (
     ApplicationDbContext db) =>
 {
     var tickets = await db.Tickets
-        .Where(t => t.ProjectId == id)
+        .Where(ticket => ticket.ProjectId == id)
         .ToListAsync();
 
     return Results.Ok(tickets);
 });
 
-// post tickets
 app.MapPost("/tickets", async (
-    Ticket ticket,
+    CreateTicketRequest request,
     ApplicationDbContext db) =>
 {
+    if (string.IsNullOrWhiteSpace(request.Title))
+    {
+        return Results.BadRequest("Title is required.");
+    }
+
+    if (string.IsNullOrWhiteSpace(request.Summary))
+    {
+        return Results.BadRequest("Summary is required.");
+    }
+
+    var project = await db.Projects
+        .FirstOrDefaultAsync(project => project.Id == request.ProjectId);
+
+    if (project is null)
+    {
+        return Results.BadRequest("Choose an existing project.");
+    }
+
+    var creator = await db.Users
+        .FirstOrDefaultAsync(user => user.Id == request.CreatorId);
+
+    if (creator is null)
+    {
+        return Results.BadRequest("Choose an existing creator.");
+    }
+
+    if (request.AssigneeId.HasValue)
+    {
+        var assigneeExists = await db.Users
+            .AnyAsync(user => user.Id == request.AssigneeId.Value);
+
+        if (!assigneeExists)
+        {
+            return Results.BadRequest("Choose an existing assignee.");
+        }
+    }
+
+    var ticket = new Ticket
+    {
+        Title = request.Title.Trim(),
+        Summary = request.Summary.Trim(),
+        Details = request.Details,
+        Status = "To Do",
+        ProjectId = project.Id,
+        CreatorId = creator.Id,
+        AssigneeId = request.AssigneeId,
+        CreatedTime = DateTime.UtcNow
+    };
+
     db.Tickets.Add(ticket);
+    await db.SaveChangesAsync();
+
+    ticket.TicketKey = project.ProjectKey + "-" + ticket.Id;
     await db.SaveChangesAsync();
 
     return Results.Created($"/tickets/{ticket.Id}", ticket);
@@ -130,9 +187,9 @@ app.MapGet("/tickets/{id}", async (
     ApplicationDbContext db) =>
 {
     var ticket = await db.Tickets
-        .FirstOrDefaultAsync(t => t.Id == id);
+        .FirstOrDefaultAsync(ticket => ticket.Id == id);
 
-    if (ticket == null)
+    if (ticket is null)
     {
         return Results.NotFound();
     }
@@ -140,5 +197,39 @@ app.MapGet("/tickets/{id}", async (
     return Results.Ok(ticket);
 });
 
+app.MapPost("/users", async (
+    User user,
+    ApplicationDbContext db) =>
+{
+    db.Users.Add(user);
+    await db.SaveChangesAsync();
+
+    return Results.Created($"/users/{user.Id}", user);
+});
+
+app.MapGet("/users", async (ApplicationDbContext db) =>
+{
+    var users = await db.Users
+        .Select(user => new
+        {
+            user.Id,
+            user.Name,
+            user.Email,
+            user.UserType
+        })
+        .ToListAsync();
+
+    return Results.Ok(users);
+});
 
 app.Run();
+
+public class CreateTicketRequest
+{
+    public string Title { get; set; } = "";
+    public string Summary { get; set; } = "";
+    public string? Details { get; set; }
+    public int ProjectId { get; set; }
+    public int CreatorId { get; set; }
+    public int? AssigneeId { get; set; }
+}

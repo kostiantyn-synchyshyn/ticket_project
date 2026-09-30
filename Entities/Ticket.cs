@@ -19,13 +19,13 @@ public class Ticket
     public string? Status { get; set; }
 
     [Column("created_time")]
-    public DateTime? CreatedTime { get; set; }
+    public DateTime CreatedTime { get; set; } = DateTime.UtcNow;
 
     [Column("title")]
-    public string? Title { get; set; }
+    public string? Title { get; set; } = "";
 
     [Column("summary")]
-    public string? Summary { get; set; }
+    public string? Summary { get; set; } = "";
 
     [Column("updated_time")]
     public DateTime? UpdatedTime { get; set; }
@@ -35,7 +35,7 @@ public class Ticket
     public int CreatorId { get; set; }
 
     [Column("assignee_id")]
-    public int AssigneeId { get; set; }
+    public int? AssigneeId { get; set; }
 
     [Column("project_id")]
     public int ProjectId { get; set; }
@@ -43,8 +43,9 @@ public class Ticket
 // relationships
     [JsonIgnore]
     public User Creator { get; set; } = null!;
+    
     [JsonIgnore]
-    public User Assignee { get; set; } = null!;
+    public User? Assignee { get; set; }
     
     [JsonIgnore]
     public Project Project { get; set; } = null!;

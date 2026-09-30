@@ -4,6 +4,7 @@ namespace TicketProject.Entities;
 [Table("users")]
 public class User
 {
+    [Column("id")]
     public int Id { get; set; }
 
     [Column("email")]
