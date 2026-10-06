@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,12 +8,8 @@
 </head>
 
 <body>
-
 <header class="topbar">
-
-    <div class="logo">
-        TicketProject
-    </div>
+    <div class="logo">TicketProject</div>
 
     <nav>
         <a href="/Index.html">Projects</a>
@@ -22,112 +17,70 @@
         <a href="/CreateTicket.html">Create Ticket</a>
     </nav>
 
-    <a href="/Login.html" class="logout-button">
-        Logout
-    </a>
- 
-
+    <a href="/Login.html" class="logout-button">Logout</a>
 </header>
 
 <main class="page-container">
-    
     <div class="page-header">
-
         <div>
             <h1>Create Project</h1>
             <p>Create a new project</p>
         </div>
-
     </div>
 
-    <div class="form-card">
-
+    <form class="form-card" onsubmit="createProject(event)">
         <div class="form-row">
-
-            <label for="projectId">
-                Project ID
-            </label>
-
+            <label for="projectId">Project ID</label>
             <input
                     id="projectId"
                     type="text"
                     value="Automatically generated"
                     disabled>
-
         </div>
 
-
         <div class="form-row">
-
-            <label for="projectKey">
-                Project Key
-            </label>
-
+            <label for="projectKey">Project Key</label>
             <input
                     id="projectKey"
+                    name="projectKey"
                     type="text"
                     placeholder="e.g. PAY"
-                    maxlength="10">
-
+                    maxlength="10"
+                    required>
         </div>
 
-
         <div class="form-row">
-
-            <label for="projectName">
-                Project Name
-            </label>
-
+            <label for="projectName">Project Name</label>
             <input
                     id="projectName"
+                    name="projectName"
                     type="text"
                     placeholder="e.g. Payment System"
                     required>
-
         </div>
 
-
         <div class="form-row">
-
-            <label for="projectAdmin">
-                Project Admin
-            </label>
-
+            <label for="projectAdmin">Project Admin</label>
             <input
                     id="projectAdmin"
+                    name="projectAdmin"
                     type="text"
                     placeholder="Project administrator"
                     required>
-
         </div>
 
+        <p id="project-message" role="alert"></p>
 
         <div class="form-actions">
+            <a href="/Index.html" class="secondary-button">Cancel</a>
 
-            <a
-                    href="/Index.html"
-                    class="secondary-button">
-                Cancel
-            </a>
-
-            <button
-                    type="button"
-                    class="primary-button"
-                    onclick="createProject(
-    document.getElementById('projectKey').value,
-    document.getElementById('projectName').value,
-    document.getElementById('projectAdmin').value
-)">
+            <button type="submit" class="primary-button">
                 Create Project
             </button>
-
         </div>
-
-    </div>
-
+    </form>
 </main>
 
 <script src="/Js/App.js"></script>
-
 </body>
 </html>

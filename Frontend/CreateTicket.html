@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TicketProject - Create Ticket</title>
+    <title>Create Ticket</title>
     <link rel="stylesheet" href="/Css/Site.css">
 </head>
-
 <body>
 <header class="topbar">
     <div class="logo">TicketProject</div>
@@ -17,64 +16,70 @@
         <a href="/CreateTicket.html">Create Ticket</a>
     </nav>
 
-    <a href="/Login.html" class="logout-button">Logout</a>
+    <button type="button" class="logout-button" onclick="logout()">
+        Logout
+    </button>
 </header>
 
 <main class="page-container">
     <div class="page-header">
         <div>
             <h1>Create Ticket</h1>
-            <p>Add a ticket to a project</p>
+            <p>Add a ticket to a project.</p>
         </div>
     </div>
 
-    <div class="form-card">
+    <form class="form-card" onsubmit="createTicket(event)">
         <div class="form-row">
             <label for="title">Title</label>
-            <input id="title" type="text" required>
+            <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    required>
         </div>
 
         <div class="form-row">
             <label for="summary">Summary</label>
-            <input id="summary" type="text" required>
+            <input
+                    id="summary"
+                    name="summary"
+                    type="text"
+                    required>
         </div>
 
         <div class="form-row">
             <label for="details">Description</label>
-            <textarea id="details" rows="5"></textarea>
+            <textarea
+                    id="details"
+                    name="details"
+                    rows="5"></textarea>
         </div>
 
         <div class="form-row">
             <label for="project">Project</label>
-            <select id="project" required>
+            <select id="project" name="project" required>
                 <option value="">Choose a project</option>
             </select>
         </div>
 
         <div class="form-row">
-            <label for="creator">Creator</label>
-            <select id="creator" required>
-                <option value="">Choose a creator</option>
-            </select>
-        </div>
-
-        <div class="form-row">
             <label for="assignee">Assignee</label>
-            <select id="assignee">
+            <select id="assignee" name="assignee">
                 <option value="">Unassigned</option>
             </select>
         </div>
 
+        <p id="ticket-message" role="alert"></p>
+
         <div class="form-actions">
             <a href="/Index.html" class="secondary-button">Cancel</a>
-            <button
-                    type="button"
-                    class="primary-button"
-                    onclick="createTicket()">
+
+            <button type="submit" class="primary-button">
                 Create Ticket
             </button>
         </div>
-    </div>
+    </form>
 </main>
 
 <script src="/Js/App.js"></script>

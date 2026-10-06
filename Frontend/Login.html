@@ -14,28 +14,15 @@
     
     <h1>TicketProject</h1>
     <p class="subtitle">Sign in to continue</p>
-    
-    <form>
 
+    <form onsubmit="login(event)">
         <label for="email">Email</label>
-        <input
-                id="email"
-                type="email"
-                placeholder="Enter your email">
+        <input id="email" type="email" required>
 
         <label for="password">Password</label>
-        <input
-                id="password"
-                type="password"
-                placeholder="Enter your password">
+        <input id="password" type="password" minlength="8" required>
 
-        <button
-                type="button"
-                class="primary-button"
-                onclick="window.location.href='/Index.html'">
-            Login
-        </button>
-
+        <button type="submit" class="primary-button">Login</button>
     </form>
  
 

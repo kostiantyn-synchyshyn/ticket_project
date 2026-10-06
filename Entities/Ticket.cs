@@ -32,21 +32,20 @@ public class Ticket
     
 // foreign keys    
     [Column("creator_id")]
-    public int CreatorId { get; set; }
+    public int? CreatorId { get; set; }
 
     [Column("assignee_id")]
     public int? AssigneeId { get; set; }
 
     [Column("project_id")]
-    public int ProjectId { get; set; }
+    public int ProjectId { get; set; } //shouldn't be nullable
     
 // relationships
     [JsonIgnore]
-    public User Creator { get; set; } = null!;
+    public User? Creator { get; set; } = null!;
+    [JsonIgnore]
+    public User? Assignee { get; set; } = null!;
     
     [JsonIgnore]
-    public User? Assignee { get; set; }
-    
-    [JsonIgnore]
-    public Project Project { get; set; } = null!;
+    public Project Project { get; set; }
 }
