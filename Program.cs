@@ -65,10 +65,11 @@ app.UseStaticFiles(new StaticFileOptions
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Register a user.
 app.MapPost("/users", async (
     RegisterRequest request,
     ApplicationDbContext db,
-    IPasswordHasher<User> passwordHasher) => // HASHING: inject the hasher.
+    IPasswordHasher<User> passwordHasher) =>
 {
     if (string.IsNullOrWhiteSpace(request.Name))
     {
@@ -88,7 +89,7 @@ app.MapPost("/users", async (
     if (request.Password.Length < 8)
     {
         return Results.BadRequest(
-            "Password must beat least 8 characters.");
+            "Password must be at least 8 characters.");
     }
 
     var email = request.Email.Trim();
@@ -108,7 +109,6 @@ app.MapPost("/users", async (
         UserType = "User"
     };
 
-    // HASHING: save the hash instead of the plaintext password.
     user.Password = passwordHasher.HashPassword(user, request.Password);
 
     db.Users.Add(user);
@@ -123,11 +123,12 @@ app.MapPost("/users", async (
     });
 });
 
+// Log in.
 app.MapPost("/login", async (
     LoginRequest request,
     ApplicationDbContext db,
     HttpContext httpContext,
-    IPasswordHasher<User> passwordHasher) => // HASHING: inject the hasher.
+    IPasswordHasher<User> passwordHasher) =>
 {
     if (string.IsNullOrWhiteSpace(request.Email)
         || string.IsNullOrWhiteSpace(request.Password))
@@ -140,13 +141,11 @@ app.MapPost("/login", async (
     var user = await db.Users
         .FirstOrDefaultAsync(user => user.Email.ToLower() == email);
 
-    // HASHING: check that a user and stored password value exist.
     if (user is null || string.IsNullOrEmpty(user.Password))
     {
         return Results.Unauthorized();
     }
 
-    // HASHING: verify the entered password against the stored hash.
     PasswordVerificationResult verification;
 
     try
@@ -158,7 +157,6 @@ app.MapPost("/login", async (
     }
     catch (FormatException)
     {
-        // A malformed stored value is not a valid password hash.
         return Results.Unauthorized();
     }
 
@@ -167,7 +165,6 @@ app.MapPost("/login", async (
         return Results.Unauthorized();
     }
 
-    // HASHING: upgrade an older hash after successful verification.
     if (verification == PasswordVerificationResult.SuccessRehashNeeded)
     {
         user.Password = passwordHasher.HashPassword(
@@ -196,6 +193,7 @@ app.MapPost("/login", async (
     return Results.Ok(new { user.Name });
 });
 
+// Log out.
 app.MapPost("/logout", async (HttpContext httpContext) =>
 {
     await httpContext.SignOutAsync(
@@ -204,6 +202,7 @@ app.MapPost("/logout", async (HttpContext httpContext) =>
     return Results.Ok();
 });
 
+// Project overview for Index.html.
 app.MapGet("/projects", async (ApplicationDbContext db) =>
 {
     var projects = await db.Projects
@@ -236,11 +235,53 @@ app.MapGet("/projects", async (ApplicationDbContext db) =>
     return Results.Ok(projects);
 });
 
+// NEW: one project and its tickets for Project.html.
+app.MapGet("/projects/{id:int}", async (
+    int id,
+    ApplicationDbContext db) =>
+{
+    var project = await db.Projects
+        .Where(project => project.Id == id)
+        .Select(project => new
+        {
+            project.Id,
+            project.ProjectKey,
+            project.Name,
+            project.ProjectAdmin,
+            Tickets = db.Tickets
+                .Where(ticket => ticket.ProjectId == project.Id)
+                .OrderByDescending(ticket => ticket.CreatedTime)
+                .ThenByDescending(ticket => ticket.Id)
+                .Select(ticket => new
+                {
+                    ticket.Id,
+                    ticket.TicketKey,
+                    ticket.Title,
+                    ticket.Summary,
+                    ticket.Status,
+                    AssigneeName = ticket.Assignee == null
+                        ? null
+                        : ticket.Assignee.Name
+                })
+                .ToList()
+        })
+        .FirstOrDefaultAsync();
+
+    if (project is null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(project);
+});
+
+// Create a project.
 app.MapPost("/projects", async (
     Project project,
     ApplicationDbContext db) =>
 {
     project.CreatedTime = DateTime.UtcNow;
+
     db.Projects.Add(project);
     await db.SaveChangesAsync();
 
@@ -248,6 +289,7 @@ app.MapPost("/projects", async (
 })
 .RequireAuthorization();
 
+// List tickets belonging to a project.
 app.MapGet("/projects/{id}/tickets", async (
     int id,
     ApplicationDbContext db) =>
@@ -261,6 +303,7 @@ app.MapGet("/projects/{id}/tickets", async (
     return Results.Ok(tickets);
 });
 
+// Create a ticket.
 app.MapPost("/tickets", async (
     CreateTicketRequest request,
     ClaimsPrincipal currentUser,
@@ -320,6 +363,7 @@ app.MapPost("/tickets", async (
 })
 .RequireAuthorization();
 
+// Ticket details.
 app.MapGet("/tickets/{id}", async (
     int id,
     ApplicationDbContext db) =>
@@ -351,6 +395,7 @@ app.MapGet("/tickets/{id}", async (
     return Results.Ok(ticket);
 });
 
+// Update ticket status.
 app.MapPut("/tickets/{id}/status", async (
     int id,
     UpdateTicketStatusRequest request,
@@ -381,6 +426,7 @@ app.MapPut("/tickets/{id}/status", async (
 })
 .RequireAuthorization();
 
+// Users available in the assignee dropdown.
 app.MapGet("/users", async (ApplicationDbContext db) =>
 {
     var users = await db.Users
