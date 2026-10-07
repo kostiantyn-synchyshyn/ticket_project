@@ -1,0 +1,15 @@
+C:\dev\TicketProject\TicketProjectTest\bin\Debug\net10.0\TicketProjectTest.exe
+C:\dev\TicketProject\TicketProjectTest\bin\Debug\net10.0\TicketProjectTest.deps.json
+C:\dev\TicketProject\TicketProjectTest\bin\Debug\net10.0\TicketProjectTest.runtimeconfig.json
+C:\dev\TicketProject\TicketProjectTest\bin\Debug\net10.0\TicketProjectTest.dll
+C:\dev\TicketProject\TicketProjectTest\bin\Debug\net10.0\TicketProjectTest.pdb
+C:\dev\TicketProject\TicketProjectTest\obj\Debug\net10.0\TicketProjectTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\dev\TicketProject\TicketProjectTest\obj\Debug\net10.0\TicketProjectTest.AssemblyInfoInputs.cache
+C:\dev\TicketProject\TicketProjectTest\obj\Debug\net10.0\TicketProjectTest.AssemblyInfo.cs
+C:\dev\TicketProject\TicketProjectTest\obj\Debug\net10.0\TicketProjectTest.csproj.CoreCompileInputs.cache
+C:\dev\TicketProject\TicketProjectTest\obj\Debug\net10.0\TicketProjectTest.sourcelink.json
+C:\dev\TicketProject\TicketProjectTest\obj\Debug\net10.0\TicketProjectTest.dll
+C:\dev\TicketProject\TicketProjectTest\obj\Debug\net10.0\refint\TicketProjectTest.dll
+C:\dev\TicketProject\TicketProjectTest\obj\Debug\net10.0\TicketProjectTest.pdb
+C:\dev\TicketProject\TicketProjectTest\obj\Debug\net10.0\TicketProjectTest.genruntimeconfig.cache
+C:\dev\TicketProject\TicketProjectTest\obj\Debug\net10.0\ref\TicketProjectTest.dll

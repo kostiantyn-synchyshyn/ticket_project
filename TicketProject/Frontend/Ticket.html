@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Details</title>
+    <link rel="stylesheet" href="/Css/Site.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="logo">TicketProject</div>
+    <nav><a href="/Index.html">Projects</a></nav>
+    <button class="logout-button" onclick="logout()">Logout</button>
+</header>
+
+<main class="page-container" id="ticket-details">
+    <a id="back-to-project" href="/Index.html">← Back to project</a>
+    <h1 id="ticket-key"></h1>
+    <h2 id="ticket-title"></h2>
+    <p><strong>Summary:</strong> <span id="ticket-summary"></span></p>
+    <p><strong>Description:</strong> <span id="ticket-description"></span></p>
+    <p><strong>Project:</strong> <span id="ticket-project"></span></p>
+    <p><strong>Assignee:</strong> <span id="ticket-assignee"></span></p>
+    <p><strong>Created:</strong> <span id="ticket-created"></span></p>
+
+    <label for="ticket-status">Status</label>
+    <select id="ticket-status">
+        <option value="To Do">To Do</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Done">Done</option>
+    </select>
+
+    <button class="primary-button" onclick="updateTicketStatus()">
+        Save Status
+    </button>
+    <p id="ticket-status-message" role="status"></p>
+</main>
+
+<script src="/Js/App.js"></script>
+
+</body>
+</html>

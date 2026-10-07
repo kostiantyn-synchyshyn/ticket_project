@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project - TicketProject</title>
+
+    <link rel="stylesheet" href="/Css/Site.css">
+</head>
+
+<body>
+<header class="topbar">
+    <div class="logo">TicketProject</div>
+
+    <nav>
+        <a href="/Index.html">Projects</a>
+        <a href="/CreateProject.html">Create Project</a>
+        <a href="/CreateTicket.html">Create Ticket</a>
+    </nav>
+
+    <button type="button" class="logout-button" onclick="logout()">
+        Logout
+    </button>
+</header>
+
+<main class="page-container" id="project-page">
+    <a href="/Index.html">← Back to projects</a>
+
+    <p id="project-load-message" role="status">
+        Loading project…
+    </p>
+
+    <div id="project-content" hidden>
+        <div class="page-header">
+            <div>
+                <h1 id="project-heading"></h1>
+
+                <p>
+                    <strong>Project key:</strong>
+                    <span id="project-key"></span>
+                </p>
+
+                <p>
+                    <strong>Administrator:</strong>
+                    <span id="project-admin"></span>
+                </p>
+            </div>
+
+            <a
+                    id="create-ticket-button"
+                    class="primary-button"
+                    href="/CreateTicket.html">
+                + Create Ticket
+            </a>
+        </div>
+
+        <section class="project-ticket-box"
+                 aria-labelledby="project-tickets-heading">
+            <h2 id="project-tickets-heading">Tickets</h2>
+
+            <p id="project-ticket-count"></p>
+
+            <p id="project-save-message"
+               role="status"
+               aria-live="polite"></p>
+
+            <ul id="project-ticket-list"
+                class="project-ticket-list"></ul>
+        </section>
+    </div>
+</main>
+
+<script src="/Js/App.js"></script>
+</body>
+</html>

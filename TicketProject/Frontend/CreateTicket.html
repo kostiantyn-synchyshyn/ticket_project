@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Ticket</title>
+    <link rel="stylesheet" href="/Css/Site.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="logo">TicketProject</div>
+
+    <nav>
+        <a href="/Index.html">Projects</a>
+        <a href="/CreateProject.html">Create Project</a>
+        <a href="/CreateTicket.html">Create Ticket</a>
+    </nav>
+
+    <button type="button" class="logout-button" onclick="logout()">
+        Logout
+    </button>
+</header>
+
+<main class="page-container">
+    <div class="page-header">
+        <div>
+            <h1>Create Ticket</h1>
+            <p>Add a ticket to a project.</p>
+        </div>
+    </div>
+
+    <form class="form-card" onsubmit="createTicket(event)">
+        <div class="form-row">
+            <label for="title">Title</label>
+            <input id="title" name="title" type="text" required>
+        </div>
+
+        <div class="form-row">
+            <label for="summary">Summary</label>
+            <input id="summary" name="summary" type="text" required>
+        </div>
+
+        <div class="form-row">
+            <label for="details">Description</label>
+            <textarea id="details" name="details" rows="5"></textarea>
+        </div>
+
+        <div class="form-row">
+            <label for="project">Project</label>
+            <select id="project" name="project" required>
+                <option value="">Choose a project</option>
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label for="assignee">Assignee</label>
+            <select id="assignee" name="assignee">
+                <option value="">Unassigned</option>
+            </select>
+        </div>
+
+        <p id="ticket-message" role="alert"></p>
+
+        <div class="form-actions">
+            <a id="cancel-ticket"
+               href="/Index.html"
+               class="secondary-button">
+                Cancel
+            </a>
+
+            <button type="submit" class="primary-button">
+                Create Ticket
+            </button>
+        </div>
+    </form>
+</main>
+
+<script src="/Js/App.js"></script>
+</body>
+</html>
